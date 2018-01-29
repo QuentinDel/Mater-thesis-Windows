@@ -8,4 +8,7 @@ for i = 1 : size(results, 1)
    hold off
    lgd = legend('5', '10', '15');
    title(lgd, 'nb neighbors');
+   xlabel('window size');
+   ylabel('F1 score');
+   max(sum(results, 1) / 4)
 end
