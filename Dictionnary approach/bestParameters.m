@@ -1,6 +1,6 @@
 function [results, thresholds] = bestParameters()
 
-size_windows = 3000 : 500 : 5000;
+size_windows = 4000 : 1000 : 7000;
 nb_neighbors = 5 : 5 : 15;
 datasets = 4;
 
