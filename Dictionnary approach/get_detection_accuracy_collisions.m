@@ -1,12 +1,12 @@
     
 function [thresh, F1] = get_detection_accuracy_collisions(UE_dos, detect_init, detect, training_part)
-stream_col=detect-detect_init; % get stream of jamming collisions 1 means jamming collision
+stream_col=(detect == -1) - (detect_init == -1); % get stream of jamming collisions 1 means jamming collision
 
 packet_size=40;
-pat= 1*ones(1,packet_size);
+pat= ones(1,packet_size);
 jam=strfind(stream_col,pat); % get positions of jamming collisions
 
-pat= 2*ones(1,packet_size);
+pat= -1*ones(1,packet_size);
 col=strfind(detect,pat); %  get positions of all collisions in detect streams
 col(2,1)=0;%create 2nd string
 
@@ -20,7 +20,7 @@ end
 
 
 
-n_c=sum(detect(1,training_part:end )==2)/40; %get the slot number when the jamming has started.
+n_c=sum(detect(1,training_part:end )==-1)/40; %get the slot number when the jamming has started.
 
 col_rel=col(:,end-n_c+1:end  ); %take only those collision which happened  after the jamming started.
 UE_dos_rel=UE_dos(:,end-n_c+1:end  ); %take only anomaly scores for collisions which happened  after the jamming started.

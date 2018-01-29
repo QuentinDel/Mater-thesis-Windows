@@ -12,7 +12,7 @@ DIST=single(zeros(len,1));
 
 
 for i=1:len%len_n
-    DIST(i,1)=norm(single(database_u(i,:) - query));
+    DIST(i,1)=norm(single((database_u(i,:) - query) ~= 0));
 
 end
 

@@ -6,12 +6,6 @@ dataset = load(strcat(path, datasetNames(dataset).name)); % load historic data
 detect_init = dataset.detect_init;
 detect = dataset.detect;
 
-detect_init(detect_init > 0) = 1;
-detect_init(detect_init < 0) = 2;
-detect(detect > 0) = 1;
-detect(detect < 0) = 2;
-
-
 k=window_size; %window length for the anomaly detection
 
 training_part = round(length(detect_init)*(3/4)); % get the length of the stream  which is not subject to jamming (3/4 of the data). This is the length of the training data.
@@ -68,8 +62,9 @@ end
 % subplot(4,1,3)
 % plot(EU_dos) % anomaly scores in the case with jamming
 % subplot(4,1,4)
-% plot(detect-detect_init) % positions of collisions caused by jamming
+% plot((detect == -1) - (detect_init == -1)) % positions of collisions caused by jamming
 
 [thresh, F1] = get_detection_accuracy_collisions(UE_dos, detect_init, detect, training_part); % This script calculates the effect of setting different threhsolds for anomy score for classifiying a collision as anomaly or not
+%get_detection_accuracy_collisions
 toc
 
